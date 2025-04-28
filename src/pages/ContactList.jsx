@@ -1,88 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ContactList.module.css";
-import { MyContext } from "../context/Provider";
 import Modal from "./Modal";
+import { DataContext } from "../context/DataProvider";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function ContactList({ data: { id, name, gmail } }) {
-  const { select, deleteContact, setDeleteContact, deleteContactHandler} = useContext(MyContext);
- 
-  // const [option, setOption] = useState(false);
-  // const [isCheck, setIsCheck] = useState(false);
-
-  // useEffect(() => {
-  //   if (!select) {
-  //     setIsCheck(false);
-  //   }
-  // }, [select]);
-  // const handleCheckboxChange = () => {
-  //   setIsCheck((isCheck) => !isCheck);
-  //   setDeleteContact((deleteContact) => [...deleteContact, id]);
-  //   console.log(deleteContact);
-  // };
-  // const deleteClickHandler= () =>{
-  //   openModal(id);
-  // }
-  // const confirmDeleteHandle = () =>{
-  //   deleteContactHandler(id);
-  //   setModalOpen(false);
-  // }
-  
-  // return (
-  //   <div className={styles.container}>
-      
-  //     <p className={styles.name}>{name}</p>
-  //     <p className={styles.gmail}>{gmail}</p>
-  //     <div
-  //       className={styles.options}
-  //       style={{ display: select ? "none" : "block" }}
-  //     >
-  //       {option ? (
-  //         <>
-  //           <button
-  //             className={styles.deleteButton}
-  //             onClick={deleteClickHandler}
-  //           >
-  //             حذف
-  //           </button>
-  //           <button className={styles.editButton}> ویرایش </button>
-  //         </>
-  //       ) : (
-  //         <button
-  //           className={styles.more}
-  //           onClick={() => setOption((option) => !option)}
-  //         >
-  //           ⋮
-  //         </button>
-  //       )}
-  //     </div>
-  //     <div
-  //       className={styles.options}
-  //       style={{ display: select ? "block" : "none" }}
-  //     >
-  //       <input
-  //         type="checkbox"
-  //         checked={isCheck}
-  //         onChange={handleCheckboxChange}
-  //       />
-  //     </div>
-  //     <Modal isOpen={isModalOpen} >
-  //       <p>شما در حال حذف مخاطبانتان هستید!</p>
-  //       <p>آیا مطمئن هستید؟</p>
-  //       <div className="buttons-container">
-  //       <button className="delete-button" onClick={confirmDeleteHandle}>حذف</button>
-  //       <button onClick={() => setModalOpen(false)}>انصراف</button>
-  //       </div>
-  //     </Modal>
-  //   </div>
-  // );
-
-
-
-
-
-
-
-
+function ContactList({ data: { id, name, email } }) {
+  const { select, setDeleteContact, deleteContactHandler} = useContext(DataContext);
   const [option, setOption] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // حالت مدال
@@ -91,6 +14,7 @@ function ContactList({ data: { id, name, gmail } }) {
       setIsCheck(false);
     }
   }, [select]);
+  const navigate = useNavigate();
   const handleCheckboxChange = () => {
     setIsCheck((isCheck) => !isCheck);
     setDeleteContact((deleteContact) => [...deleteContact, id]);
@@ -104,16 +28,21 @@ function ContactList({ data: { id, name, gmail } }) {
     deleteContactHandler(id); // ارسال id صحیح به تابع
     setIsModalOpen(false); // بستن مدال
   };
-
+  const editHandler = () =>{
+    console.log(id);
+    
+    navigate("/add-contact", {state: {id}});
+  }
   return (
     <div className={styles.container}>
       <p className={styles.name}>{name}</p>
-      <p className={styles.gmail}>{gmail}</p>
+      <p className={styles.email}>{email}</p>
 
       {/* بخش دکمه‌های ویرایش/حذف */}
       <div
         className={styles.options}
         style={{ display: select ? "none" : "block" }}
+        onClick={() => setOption((option) => !option)}
       >
         {option && (
           <>
@@ -123,13 +52,13 @@ function ContactList({ data: { id, name, gmail } }) {
             >
               حذف
             </button>
-            <button className={styles.editButton}>ویرایش</button>
+            <button className={styles.editButton} onClick={editHandler}>ویرایش</button>
           </>
         )}
          <button
             className={styles.more}
             style={{ display: option ? "none" : "block" }}
-            onClick={() => setOption((option) => !option)}
+            onClick={(e) => {e.stopPropagation(); setOption((option) => !option)}}
           >
             ⋮
           </button>

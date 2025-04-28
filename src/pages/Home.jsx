@@ -2,26 +2,12 @@ import { useContext, useEffect } from "react";
 
 import ContactsPage from "./ContactsPage";
 import SearchBar from "./SearchBar";
-import { MyContext } from "../context/Provider";
+import { DataContext } from "../context/DataProvider";
 function Home() {
-  const {
-    contactData,
-    setContactData,
-    contacts,
-    setContacts,
-    select,
-    setSelect,
-    deleteContact,
-    setDeleteContact,
-    deleteContactHandler,
-  } = useContext(MyContext);
+  const { fetchData } = useContext(DataContext);
 
   useEffect(() => {
-    fetch("http://localhost:3000/contacts")
-      .then((res) => res.json())
-      .then((json) => {setContactData(json)
-        setContacts(json)
-      });
+    fetchData();
   }, []);
 
   return (

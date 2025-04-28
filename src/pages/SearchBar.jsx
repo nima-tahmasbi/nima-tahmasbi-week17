@@ -5,35 +5,49 @@ import Modal from "./Modal";
 import { BsPlus } from "react-icons/bs";
 import { TiArrowBack, TiTick } from "react-icons/ti";
 import { FaUserMinus } from "react-icons/fa";
-import { MyContext } from "../context/Provider";
+import { DataContext } from "../context/DataProvider";
 import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
-  const {contacts, setContacts, contactData, select, setSelect,setDeleteContact, deleteContactHandler, deleteContact} = useContext(MyContext);
+  const {
+    contacts,
+    setContacts,
+    contactBackup,
+    select,
+    setSelect,
+    setDeleteContact,
+    deleteContactHandler,
+    deleteContact,
+  } = useContext(DataContext);
   const [searchValue, setSearchValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); // حالت مدال
-  useEffect(() =>{
+  useEffect(() => {
     if (searchValue.length > 0) {
-      const searchedContact = contactData.filter(contact => contact.name.includes(searchValue));
-      setContacts(searchedContact)
+      const searchedContact = contactBackup.filter((contact) => {
+        const searchLower = searchValue.toLowerCase();
+        return (
+          contact.name.toLowerCase().includes(searchLower) ||
+          contact.email.toLowerCase().includes(searchLower)
+        );
+      });
+      setContacts(searchedContact);
     } else {
-      setContacts(contactData);
+      setContacts(contactBackup);
     }
-    
-  },[searchValue ])
+  }, [searchValue]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const searchChangeHandler = (e) => {
     setSearchValue(e.target.value);
   };
-  
+
   const selectHandler = () => {
     setSelect((select) => !select);
-    setDeleteContact([])
+    setDeleteContact([]);
   };
 
   const handleDeleteClick = () => {
-    if (deleteContact.length<1) {
+    if (deleteContact.length < 1) {
       return null;
     }
     setIsModalOpen(true); // باز کردن مدال هنگام کلیک روی حذف
@@ -46,20 +60,16 @@ function SearchBar() {
 
   return (
     <div className={styles.container}>
-       <Modal isOpen={isModalOpen}>
+      <Modal isOpen={isModalOpen}>
         <p>آیا از حذف مخاطبان مطمئن هستید؟</p>
         <div className="buttons-container">
-          <button 
-            className="delete-button" 
+          <button
+            className="delete-button"
             onClick={handleConfirmDelete} // تغییر اینجا
           >
             حذف
           </button>
-          <button 
-            onClick={() => setIsModalOpen(false)}
-          >
-            انصراف
-          </button>
+          <button onClick={() => setIsModalOpen(false)}>انصراف</button>
         </div>
       </Modal>
       <label htmlFor="search"> جست و جو مخاطب: </label>
@@ -72,9 +82,10 @@ function SearchBar() {
 
       {select ? (
         <>
-          <button className={styles.searchBarButtons}
-          onClick={handleDeleteClick}
-           >
+          <button
+            className={styles.searchBarButtons}
+            onClick={handleDeleteClick}
+          >
             <FaUserMinus fontSize="1rem" />
           </button>
           <button className={styles.searchBarButtons} onClick={selectHandler}>
@@ -87,7 +98,10 @@ function SearchBar() {
         </button>
       )}
       <div className={styles.buttonContainer}>
-        <button className={styles.searchBarButtons} onClick={() => navigate("/add-contact")}>
+        <button
+          className={styles.searchBarButtons}
+          onClick={() => navigate("/add-contact")}
+        >
           <BsPlus fontSize="1.5rem" />
         </button>
       </div>

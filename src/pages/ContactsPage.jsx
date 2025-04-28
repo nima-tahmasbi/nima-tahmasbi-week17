@@ -1,19 +1,20 @@
 import { useContext } from "react";
 import ContactList from "./ContactList";
-import { MyContext } from "../context/Provider";
+import { DataContext } from "../context/DataProvider";
 
 const containerStyle = {
   marginTop: "20px",
   textAlign: "center",
-  minHeight: "50vh"
+  maxHeight: "550px",
+  overflowY: "scroll",
 };
 function ContactsPage() {
-  const { contacts } = useContext(MyContext);
+  const { contacts } = useContext(DataContext);
 
   return (
     <div style={containerStyle}>
       {contacts.length === 0 ? (
-        <h2 style={{margin: "15%"}}>No Contact Yet</h2>
+        <h2 style={{ marginTop: "200px" }}>No Contact Yet</h2>
       ) : (
         contacts.map((contact) => (
           <ContactList key={contact.id} data={contact} />

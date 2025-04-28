@@ -33,7 +33,7 @@ button{
     cursor: pointer;
 }
 .close-button{
-    background-color: #A1AEB1;
+    background-color: bisque;
 }
 .buttons-container{
     margin-top: 20px;
@@ -42,5 +42,5 @@ button{
     justify-content: space-between;
 }
 .delete-button {
-    background-color: #ee6b6e !important;
+    background-color: #ee6b6e;
 }
