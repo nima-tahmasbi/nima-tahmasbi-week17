@@ -8,11 +8,6 @@ function DataProvider({ children }) {
   //api Data
   const [contacts, setContacts] = useState([]);
   const [contactBackup, setContactBackup] = useState([]);
-
-  const [newContact, setNewContact] = useState({
-    name: "",
-    email: "",
-  });
   //navBar select buttom activator
   const [select, setSelect] = useState(false);
   //contact that about to be deleted
@@ -54,8 +49,8 @@ function DataProvider({ children }) {
     setDeleteContact([]);
     setSelect(false);
   };
-  const addNewContact = (id) => {
-    const { name, email } = newContact;
+  const addNewContact = (id, data) => {
+    const { name, email } = data;
     console.log("function");
     console.log(id);
     
@@ -91,8 +86,6 @@ function DataProvider({ children }) {
     setContacts,
     contactBackup,
     setContactBackup,
-    newContact,
-    setNewContact,
     addNewContact,
     select,
     setSelect,

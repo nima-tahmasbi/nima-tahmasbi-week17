@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import ContactList from "./ContactList";
+import ContactList from "../components/ContactList";
 import { DataContext } from "../context/DataProvider";
 
 const containerStyle = {

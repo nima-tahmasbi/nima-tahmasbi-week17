@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import ContactsPage from "./ContactsPage";
-import SearchBar from "./SearchBar";
+import SearchBar from "../components/SearchBar";
 import { DataContext } from "../context/DataProvider";
 function Home() {
   const { fetchData } = useContext(DataContext);
