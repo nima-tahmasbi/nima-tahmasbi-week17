@@ -1,12 +1,52 @@
-# React + Vite
+# 📒 Contact Manager App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured CRUD contact management application built with React
 
-Currently, two official plugins are available:
+![Project Preview](screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Key Features
+- Add new contacts with name and email
+- Smart search functionality
+- Edit existing contacts
+- Delete contacts with confirmation
+- Form validation with *Yup*
+- Form management using *React Hook Form*
+- Local API data persistence
+- Unique ID generation with *UUID*
 
-## Expanding the ESLint configuration
+## 🛠️ Project Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository:
+```bash
+git clone https://github.com/nima-tahmasbi/nima-tahmasbi-week19.git
+
+2. Install dependencies:
+bash
+cd contact-manager
+npm install
+
+
+3. Start the local API server:
+bash
+npm run api
+
+
+4. Launch the application:
+bash
+npm start
+
+## 📡 API Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET    | /contacts| Get all contacts |
+| POST   | /contacts| Create new contact |
+| PUT    | /contacts/:id | Update contact |
+| DELETE | /contacts/:id | Delete contact |
+
+## 🤝 Contributing
+Contributions are always welcome! Steps:
+1. Fork the repository
+2. Create new branch (git checkout -b feature/feature-name)
+3. Commit changes (git commit -m 'Add new feature')
+4. Push to branch (git push origin feature/feature-name)
+5. Open Pull Request
